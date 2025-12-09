@@ -25,9 +25,11 @@ public class Simulator {
     }
 
     public static void main(String[] args) {
-        Simulator sim = new Simulator(42L); // seeded for reproducibility
+        Simulator sim = new Simulator(42L);
         sim.setupBins();
         sim.runMenu();
+
+        System.out.println(); 
     }
 
     private void setupBins() {
@@ -65,6 +67,7 @@ public class Simulator {
 
     private void printMenu() {
         System.out.println("\n=== Waste Sorter Simulator Menu ===");
+        System.out.println();
         System.out.println("1. Auto-generate items (does NOT sort into bins)");
         System.out.println("2. View auto-generated items");
         System.out.println("3. Create a waste item manually");
@@ -74,6 +77,7 @@ public class Simulator {
         System.out.println("7. View summary");
         System.out.println("8. Save bin summary CSV");
         System.out.println("9. Exit");
+        System.out.println();
         System.out.print("Choose an option: ");
     }
 
@@ -105,7 +109,7 @@ public class Simulator {
     }
 
     private void createManualItemMenu() {
-        System.out.println("Choose type to create: 1=Plastic 2=Metal 3=Organic 4=Paper");
+        System.out.print("Choose type to create: 1: Plastic 2: Metal 3: Organic 4: Paper \nYour option: ");
         String type = scanner.nextLine().trim();
         try {
             Waste w;

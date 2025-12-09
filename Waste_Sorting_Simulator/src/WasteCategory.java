@@ -5,6 +5,5 @@ public enum WasteCategory {
     METAL,
     ORGANIC,
     PAPER,
-    GLASS,
     OTHER;
 }

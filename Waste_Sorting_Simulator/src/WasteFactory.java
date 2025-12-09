@@ -19,9 +19,9 @@ public class WasteFactory {
 
     public Waste randomWaste() {
         int r = rand.nextInt(100);
-        if (r < 35) return randomPlastic();
-        else if (r < 60) return randomOrganic();
-        else if (r < 80) return randomPaper();
+        if (r < 30) return randomPlastic();
+        else if (r < 55) return randomOrganic();
+        else if (r < 75) return randomPaper();
         else return randomMetal();
     }
 

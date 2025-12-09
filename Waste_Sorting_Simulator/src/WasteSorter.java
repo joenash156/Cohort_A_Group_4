@@ -1,0 +1,90 @@
+
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+public class WasteSorter {
+
+    private final Map<WasteCategory, WasteBin> bins = new HashMap<>();
+    private int totalProcessed = 0;
+    private int correctlySorted = 0;
+    private int incorrectlySorted = 0;
+
+    public void registerBin(WasteBin bin) {
+        if (bin == null) {
+            throw new IllegalArgumentException("bin required");
+        }
+        bins.put(bin.getCategory(), bin);
+    }
+
+    //Auto-sort watse to its correct category bin
+    //Returns true if placed successfully and updates internal statistics
+    public boolean autoSort(Waste waste) {
+        totalProcessed++;
+        if (waste == null) {
+            incorrectlySorted++;
+            return false;
+        }
+        WasteCategory category = waste.getCategory();
+        WasteBin targetBin = bins.get(category);
+        if (targetBin == null) {
+            // no bin for correct category -> incorrect
+            incorrectlySorted++;
+            return false;
+        }
+        boolean added = targetBin.addWaste(waste);
+        if (added) {
+            correctlySorted++;
+        } else {
+            incorrectlySorted++;
+        }
+        return added;
+    }
+
+    //Manual sort - User chooses a bin category to place the waste
+    //Returns true if the waste is accepted in the chosen bin
+    public boolean manualSort(Waste waste, WasteCategory category) {
+        totalProcessed++;
+        if (waste == null) {
+            incorrectlySorted++;
+            return false;
+        }
+        WasteBin chosenBin = bins.get(category);
+        if (chosenBin == null) {
+            incorrectlySorted++;
+            return false;
+        }
+        boolean accepted = chosenBin.addWaste(waste);
+        if (accepted && category == waste.getCategory()) {
+            correctlySorted++;
+        } else {
+            incorrectlySorted++;
+        }
+        return accepted;
+    }
+
+    public int getTotalProcessed() {
+        return totalProcessed;
+    }
+
+    public int getCorrectlySorted() {
+        return correctlySorted;
+    }
+
+    public int getIncorrectlySorted() {
+        return incorrectlySorted;
+    }
+
+    public Map<WasteCategory, WasteBin> getBins() {
+        return Collections.unmodifiableMap(bins);
+    }
+
+    public double getAccuracyPercent() {
+        if (totalProcessed == 0) {
+            return 0.0;
+        }
+        return (correctlySorted * 100.0) / totalProcessed;
+    }
+
+}
